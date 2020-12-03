@@ -1,7 +1,8 @@
 class ProductsController < ApplicationController
   before_action :search_product, only: [:index, :search]
   def index
-    @products = Products.all
+    @products = Product.all
+    set_product_column
   end
 
   def search
@@ -12,4 +13,9 @@ class ProductsController < ApplicationController
   def search_product
     @p = Product.ransack(params[:q])
   end
+
+  def set_product_column
+    @product_name = Product.select("name").distinct
+  end
+  
 end
